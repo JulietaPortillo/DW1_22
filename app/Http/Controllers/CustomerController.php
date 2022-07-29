@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
+
 {
     /**
      * Display a listing of the resource.
@@ -28,8 +30,10 @@ class CustomerController extends Controller
      */
     public function create()
     {
+        $categories = Category::pluck('description','id');
         return view('customers.create')
-        ->with('title', 'Registro de un nuevo cliente');
+        ->with('title', 'Registro de un nuevo cliente')
+        ->with('categories', $categories);
     }
 
     /**
@@ -45,6 +49,7 @@ class CustomerController extends Controller
         $customer->name = $request->input('name');
         $customer->address = $request->input('address');
         $customer->phone_number = $request->input('phone_number');
+        $customer->category_id = $request->input('category_id');
 
         $customer->save();
 
@@ -70,9 +75,13 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
+        $categories = Category::pluck('description','id');
+
         return view('customers.edit')
         ->with('customer', $customer)
-        ->with('title', 'Actualizar datos del Cliente');
+        ->with('title', 'Actualizar datos del Cliente')
+        ->with('categories', $categories);
+
     }
 
     /**
@@ -87,6 +96,7 @@ class CustomerController extends Controller
         $customer->name = $request->input('name');
         $customer->address = $request->input('address');
         $customer->phone_number = $request->input('phone_number');
+        $customer->category_id = $request->input('category_id');
 
         $customer->save();
 

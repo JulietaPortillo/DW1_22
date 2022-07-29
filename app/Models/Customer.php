@@ -14,7 +14,8 @@ class Customer extends Model
     protected $fillable = [
         'name',
         'address',
-        'phone_number'
+        'phone_number',
+        'category_id'
     ];
 
     public function category()
